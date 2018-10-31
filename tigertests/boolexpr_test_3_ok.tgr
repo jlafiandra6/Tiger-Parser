@@ -1,0 +1,7 @@
+main let
+    var dumbo : int;
+in begin
+    if 0=0 & 1=1 | 8=8 then
+        dumbo := 1;
+    endif;
+end

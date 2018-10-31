@@ -1,0 +1,12 @@
+main let
+    var dumbo : int;
+    var res   : int;
+    var res2   : int;
+    var carne   : int;
+    func return_it(n : int, m : int) : int begin
+            n := res2 * m;  /*Dead*/
+            return 5;
+    end;
+in begin
+    dumbo := 1;
+end

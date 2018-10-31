@@ -1,0 +1,19 @@
+main let
+    var pescado : int;
+    var carne : int;
+    var a : int;
+    var b : int; 
+    var res : int;
+    var c : int;
+in begin
+    b := a;
+    if carne = 100 then
+        b := carne + a;
+    else
+        if c = 100 then
+            b := carne + a;
+        else
+            c := 0;
+        endif;
+    endif;
+end

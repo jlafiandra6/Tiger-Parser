@@ -1,0 +1,15 @@
+main let
+    var v : boolean;
+    func return_it(n : int, m : int) : int begin
+	    return m;
+    end;
+
+    func return_it(a : boolean, b : boolean) : boolean begin
+        a := return_it(true, false);
+	    return b;
+    end;
+
+in begin
+   v := return_it(true, true);
+
+end

@@ -1,0 +1,19 @@
+main let
+    var dumbo : int;
+    var res   : int;
+    var res2   : int;
+    var carne   : int;
+    func return_it(n : int, m : int) : int begin
+            m := res * m;  
+            if carne = 100 then
+                    n := res2 * m;  /*Dead*/
+                    dumbo := dumbo * m; 
+                else
+                    n := dumbo;  /*Dead*/
+                    dumbo := carne;
+            endif;
+            return res2;
+    end;
+in begin
+    dumbo := 1;
+end 

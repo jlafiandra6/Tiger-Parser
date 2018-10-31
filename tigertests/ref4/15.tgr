@@ -1,0 +1,34 @@
+main let
+    var pescado : int;
+    var carne : int;
+    var dumbo : int;
+    var a : int;
+    var b : int; 
+    var res1 : int;
+    var res2 : int;
+    var res3 : int;
+    var res4 : int;
+    var res5 : int;
+        func return_it(n : int, m : int) : int begin
+            n := dumbo * m; 
+            dumbo := n + m;         /*DEAD*/
+            if carne = 100 then
+                    dumbo := dumbo * m; /*DEAD*/
+                else
+                    dumbo := carne;/*DEAD*/
+            endif;
+            dumbo := res2;                                                                                                                                                                                  
+            return n;
+    end;
+
+in begin
+    for b := 1 to 100 do
+        res1 := a+carne;
+    enddo;
+    if a < 100 then
+        res3 := a+b;
+    else
+        res4 := a;
+    endif;
+    res5 := a+carne;/*Bonus: CSE*/
+end

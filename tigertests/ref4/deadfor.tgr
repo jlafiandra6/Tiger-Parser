@@ -1,0 +1,19 @@
+main let
+    var pescado : int;
+    var carne : int;
+    var a : int;
+    var b : int;
+    var res : int;
+    var c : int;
+in begin
+    a := 100;
+    b := a;
+    res := a + b;
+    for a := 1 to 100 do
+        a := 1;
+        b := a + 1;
+        a := 2;/*DEAD*/
+        a := 3;
+    enddo;
+    carne := 4;
+end

@@ -1,0 +1,10 @@
+main let
+    var x : int;
+
+    func x() : int begin
+        return 0;
+        x := 3;
+    end;
+in begin
+    x := 0;
+end

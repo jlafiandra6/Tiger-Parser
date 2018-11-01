@@ -1,0 +1,13 @@
+main let
+    var dumbo : int;
+    var res   : int;
+    func return_it(n : int, m : int) : int begin
+            n := dumbo * m;
+            dumbo := n + m;
+            return 1;
+    end;
+in begin
+    res := 5;
+    dumbo := return_it(res + 1, res);
+    res := 3;
+end

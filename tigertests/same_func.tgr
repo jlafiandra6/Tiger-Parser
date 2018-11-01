@@ -1,0 +1,15 @@
+main let
+    var v : boolean;
+    func return_it(m : int, m : int) : int begin
+        v := return_it(5, 5);
+	    return m;
+    end;
+
+    func return_it(a : int, b : int) : boolean begin
+       return return_it(3, 4);
+    end;
+
+in begin
+   v := return_it(5, 4);
+
+end

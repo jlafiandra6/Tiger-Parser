@@ -1,3 +1,5 @@
+import java.io.*;
+import java.util.*;
 
 public class TigerSymbolTable {
 	private Map<String, Object> table = new HashMap<String, Object>();
@@ -72,4 +74,3 @@ public class TigerSymbolTable {
 		return scope;
 	}
 }
-

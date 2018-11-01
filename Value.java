@@ -37,11 +37,6 @@ public class Value {
 		this.content = content;
 	}
 
-	//Pointer to another Value
-	public Value(Value value) {
-		this = value;
-	}
-	
 
     @Override
     public String toString() {

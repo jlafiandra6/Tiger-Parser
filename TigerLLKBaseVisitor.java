@@ -23,7 +23,10 @@ public class TigerLLKBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTigerprogram(TigerLLKParser.TigerprogramContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTigerprogram(TigerLLKParser.TigerprogramContext ctx) {
+		System.out.println("Visitor works");
+		return visitChildren(ctx);
+	}
 	/**
 	 * {@inheritDoc}
 	 *

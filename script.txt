@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
 for i in tigertests/project1_test_code/*.tiger.txt; do
-  java org.antlr.v4.gui.TestRig TigerLLK tigerprogram  -tree $i >> output/$i.txt
+  > output/main/$i
+  java TigerMain $i >> output/main/$i
+  > output/$i
+  java org.antlr.v4.gui.TestRig TigerLLK tigerprogram  -tree $i >> output/$i
+done
+
+for i in tigertests/project1_test_code/selfmade_tests/*.tiger.txt; do
+  > output/main/$i
+  java TigerMain $i >> output/main/$i
+  > output/$i
+  java org.antlr.v4.gui.TestRig TigerLLK tigerprogram  -tree $i >> output/$i
 done

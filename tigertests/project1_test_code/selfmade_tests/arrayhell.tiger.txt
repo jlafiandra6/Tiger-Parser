@@ -1,0 +1,9 @@
+main let
+        type ArrayInt = array [100] of int; /*Declare ArrayInt as a new type */
+        var X, Y : ArrayInt := 10; /* Declare vars X and Y as arrays with initialization */
+        var i, sum : int := 0;
+in
+begin
+        X[Y[5]] := X[5]:= Y[0];
+end
+

@@ -20,8 +20,68 @@ public class IRGENERATIONVISITOR<T> extends AbstractParseTreeVisitor<T> implemen
 	private int justStarted = 1;
 	private int currentTemp = 0;
 	private int assigning = 0;
-	private int intList = ;
 	private LinkedList<String> lastif = new LinkedList<>();
+
+	private ArrayList<String> resetable = new ArrayList<>();
+	private HashMap<String,floater> typeList = new HashMap();
+	private ArrayList<var> variables = new ArrayList<>();
+	private HashMap<String,String> attributes = new HashMap<>();
+
+
+	public class var{
+		public int dimensions;
+		public int float0int1;
+		public String id;
+		public float initial;
+		public String recordName;
+
+		public var(int dimensions, int float0int1,float initial, String id){
+			this.initial = initial;
+			this.float0int1 = float0int1;
+			this.dimensions = dimensions;
+			this.id = id;
+			this.recordName = "";
+		}
+		public var(int dimensions, int float0int1,float initial, String id,String recordName){
+			this.initial = initial;
+			this.float0int1 = float0int1;
+			this.dimensions = dimensions;
+			this.id = id;
+			this.recordName = this.recordName;
+		}
+	}
+
+	public class floater{
+		public int dimensions;
+		public String pointer;
+		public String id;
+		public HashMap<String,String> records;
+
+		public int getDimensions() {
+			return dimensions;
+		}
+
+		public void setDimensions(int dimensions) {
+			this.dimensions = dimensions;
+		}
+
+
+		public String getPointer() {
+			return pointer;
+		}
+
+		public void setPointer(String pointer) {
+			this.pointer =
+					pointer;
+		}
+
+		public floater(int dimensions, String pointer){
+			this.pointer = pointer;
+			this.dimensions = dimensions;
+			this.records = null;
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -51,9 +111,75 @@ public class IRGENERATIONVISITOR<T> extends AbstractParseTreeVisitor<T> implemen
 	@Override public T visitDeclarationsegment(TigerLLKParser.DeclarationsegmentContext ctx) {
 		T yuh = visitChildren(ctx);
 
+
 		if(justStarted == 1){
 			System.out.println("#start_function main");
 			System.out.println("void main():");
+
+			System.out.print("int-list: ");
+			for(var x : variables){
+				if(x.recordName != "" && x.recordName != null){
+					for( String attribute: typeList.get(x.recordName).records.keySet()){
+						if(typeList.get(x.recordName).records.get(attribute).equals("int")){
+							System.out.print(currentScope + x.id +"."+attribute + ", ");
+						}
+					}
+				}else{
+					if(x.float0int1 == 0){
+						if(x.dimensions != -1){
+							System.out.print(currentScope + x.id + "["+ x.dimensions+"], ");
+						} else{
+							System.out.print(currentScope + x.id + ", ");
+
+						}
+					}
+				}
+			}
+			System.out.println("");
+			System.out.print("float-list: ");
+			for(var x : variables){
+				if(x.recordName != "" && x.recordName != null){
+					for( String attribute: typeList.get(x.recordName).records.keySet()){
+						if(typeList.get(x.recordName).records.get(attribute).equals("float")){
+							System.out.print(currentScope + x.id +"."+attribute + ", ");
+						}
+					}
+				} else{
+					if(x.float0int1 == 1){
+						if(x.dimensions != -1){
+							System.out.print(currentScope + x.id + "["+ x.dimensions+"], ");
+						} else{
+							System.out.print(currentScope + x.id + ", ");
+
+						}
+					}
+				}
+
+			}
+			System.out.println("");
+			for(var x : variables){
+				if(x.initial != -1){
+					if(x.float0int1 == 0){
+						if(x.dimensions == -1){
+							System.out.println("assign, " + currentScope +x.id +", "+ (int)x.initial+", ");
+						} else{
+							System.out.println("assign, " + currentScope +x.id +", "+ x.dimensions+", " + (int)x.initial);
+						}
+
+					} else{
+						if(x.dimensions == -1){
+							System.out.println("assign, " + currentScope +x.id +", "+ x.initial+", ");
+						} else{
+							System.out.println("assign, " +currentScope + x.id +", "+ x.dimensions+", " + x.initial);
+						}
+
+
+					}
+
+
+
+				}
+			}
 
 			System.out.println("main:");
 			justStarted = 0;
@@ -88,7 +214,12 @@ public class IRGENERATIONVISITOR<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTypedeclaration(TigerLLKParser.TypedeclarationContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTypedeclaration(TigerLLKParser.TypedeclarationContext ctx) {
+		floater baller = (floater)this.visit(ctx.getChild(3)) ;
+		baller.id = ctx.ID().toString();
+		typeList.put(ctx.ID().toString(),baller);
+		return  (T)baller;}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -96,7 +227,57 @@ public class IRGENERATIONVISITOR<T> extends AbstractParseTreeVisitor<T> implemen
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitIDtype(TigerLLKParser.IDtypeContext ctx) {
+		return (T) new floater(-1,(String)this.visit(ctx.getChild(0)).toString());
+	}
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitArrayType(TigerLLKParser.ArrayTypeContext ctx) {
 
+		floater bob = new floater((int)Integer.parseInt(ctx.getChild(2).toString()),(String)(this.visit(ctx.getChild(5)).toString()));
+		return (T) bob;
+	}
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitRecordType(TigerLLKParser.RecordTypeContext ctx) {
+		floater bob = new floater(-1,"none");
+		this.visit(ctx.getChild(1));
+		bob.records = new HashMap<>();
+		for(String id : attributes.keySet()){
+			bob.records.put(id,attributes.get(id));
+		}
+		attributes.clear();
+		return (T)bob;
+	}
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitPointerType(TigerLLKParser.PointerTypeContext ctx) {
+
+		floater bob = typeList.get(ctx.ID().toString());
+		return (T) bob;
+	}
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitFieldlist(TigerLLKParser.FieldlistContext ctx) {
+		if(ctx.getChildCount() != 0){
+			attributes.put(ctx.ID().toString(),(String)this.visit(ctx.getChild(2)).toString());
+			this.visit(ctx.getChild(4));
+		}
 		return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -104,82 +285,120 @@ public class IRGENERATIONVISITOR<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArrayType(TigerLLKParser.ArrayTypeContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitRecordType(TigerLLKParser.RecordTypeContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitPointerType(TigerLLKParser.PointerTypeContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitFieldlist(TigerLLKParser.FieldlistContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitTypeid(TigerLLKParser.TypeidContext ctx) {
+		return (T) ctx.getChild(0).toString(); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitVardeclaration(TigerLLKParser.VardeclarationContext ctx) {
+		this.visit(ctx.getChild(1));
+		floater type = (floater)this.visit(ctx.getChild(3));
+		String init= (String)this.visit(ctx.getChild(4));
+		int yo = 0;
+		if(type.getPointer() == "int"){
+			yo = 1;
+		}
+		if(init != "!"){
+			for(String x : resetable){
+				var cool =new var(type.getDimensions(),yo,Float.parseFloat(init),x);
+				if(type.pointer == "none"){
+					cool.recordName = type.id;
+				}
+				variables.add(cool);
+			}
+		} else{
+			for(String x : resetable){
+				//float or int and dimensions
+				var cool = new var(type.getDimensions(),yo,-1,x);
+				if(type.pointer == "none"){
+					cool.recordName = type.id;
+				}
+				variables.add(cool);
 
+			}
 
-		return (T) ctx.getChild(0); }
+		}
+		resetable.clear();
+		return (T)"";
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVardeclaration(TigerLLKParser.VardeclarationContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIdlist(TigerLLKParser.IdlistContext ctx) {
+		resetable.add(ctx.ID().toString());
+		this.visit(ctx.getChild(1));
+		return (T)""; }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIdlist(TigerLLKParser.IdlistContext ctx) { return visitChildren(ctx); }
+	@Override public T visitItail(TigerLLKParser.ItailContext ctx) {
+		if(ctx.getChildCount() != 0){
+			return (T) this.visit(ctx.getChild(1));
+		}
+		return (T) "";
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitItail(TigerLLKParser.ItailContext ctx) { return visitChildren(ctx); }
+	@Override public T visitOptionalinit(TigerLLKParser.OptionalinitContext ctx) {
+		if(ctx.getChildCount() != 0){
+			return this.visit(ctx.getChild(1));
+		}
+		return (T) "!";
+		}
 	/**
 	 * {@inheritDoc}
 	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitOptionalinit(TigerLLKParser.OptionalinitContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
+
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitFunctdeclaration(TigerLLKParser.FunctdeclarationContext ctx) {
 		System.out.println("#start_function " +ctx.ID());
+
 		String type = "void";
 		String typer = (String)this.visit(ctx.getChild(5));
-		if(typer != ""){
-			System.out.println(typer +" "+ ctx.ID() + "(" + this.visit(ctx.getChild(3))+ ") :");
-		} else{
-			System.out.println(type +" "+ ctx.ID() + "(" + this.visit(ctx.getChild(3))+ ") :");
-		}
+		String paramlist = (String)this.visit(ctx.getChild(3));
+		String[] gee = paramlist.split(",");
 
+		ArrayList<String> intlist = new ArrayList<>();
+		ArrayList<String> floatlist = new ArrayList<>();
+
+		for(String x : gee){
+			if(x.contains("int")){
+				intlist.add(x.replace("int ",Integer.toString(currentScope)));
+			} else if(x.contains("float")){
+				floatlist.add(x.replace("float ",Integer.toString(currentScope)));
+			}
+		}
+		if(typer != ""){
+			System.out.println(typer +" "+ ctx.ID() + "(" + paramlist+ ") :");
+		} else{
+			System.out.println(type +" "+ ctx.ID() + "(" + paramlist+ ") :");
+		}
+		System.out.print("int-list: ");
+		for(String y : intlist){
+			System.out.print(y);
+		}
+		System.out.println("");
+		System.out.print("float-list: ");
+		for(String y : floatlist){
+			System.out.print(y);
+
+		}
+		System.out.println("");
 		this.visit(ctx.getChild(7));
 		System.out.println("return, , , ");
 		System.out.println("#end_function " +ctx.ID());
@@ -237,7 +456,7 @@ public class IRGENERATIONVISITOR<T> extends AbstractParseTreeVisitor<T> implemen
 	 */
 	@Override public T visitParam(TigerLLKParser.ParamContext ctx) {
 		String name = ctx.ID().toString();
-		 name = this.visit(ctx.getChild(2)) + " "+ name;
+		 name = ((floater)this.visit(ctx.getChild(2))).getPointer() + " "+ name;
 		return (T) name;
 
 		}

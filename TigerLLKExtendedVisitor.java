@@ -504,7 +504,6 @@ public class TigerLLKExtendedVisitor extends TigerLLKBaseVisitor<Object> {
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public Object visitExpr(TigerLLKParser.ExprContext ctx) {
-		
 		return visitChildren(ctx);
 	}
 	/**
@@ -597,7 +596,8 @@ public class TigerLLKExtendedVisitor extends TigerLLKBaseVisitor<Object> {
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public Object visitConstant(TigerLLKParser.ConstantContext ctx) { return visitChildren(ctx); }
+	@Override public Object visitConstant(TigerLLKParser.ConstantContext ctx) {
+		return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -634,7 +634,10 @@ public class TigerLLKExtendedVisitor extends TigerLLKBaseVisitor<Object> {
 		floatval.setType("float");
 		return floatval;
 	}
-	@Override public Object visitExprlist(TigerLLKParser.ExprlistContext ctx) { return visitChildren(ctx); }
+	@Override public Object visitExprlist(TigerLLKParser.ExprlistContext ctx) {
+		Value exp = (Value)visit(ctx.expr());
+		return exp;
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -648,7 +651,10 @@ public class TigerLLKExtendedVisitor extends TigerLLKBaseVisitor<Object> {
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public Object visitLvalue(TigerLLKParser.LvalueContext ctx) { return visitChildren(ctx); }
+	@Override public Object visitLvalue(TigerLLKParser.LvalueContext ctx) {
+
+		return visitChildren(ctx);
+	}
 	/**
 	 * {@inheritDoc}
 	 *

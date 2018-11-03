@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
 for i in tigertests/project1_test_code/*.tiger.txt; do
-  java org.antlr.v4.gui.TestRig TigerLLK tigerprogram  -tree $i >> output/$i.txt
+  > output/ir/$i
+  java TigerMain $i >> output/ir/$i
+  > output/grammar/$i
+  java org.antlr.v4.gui.TestRig TigerLLK tigerprogram  -tree $i >> output/grammar/$i
 done

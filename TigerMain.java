@@ -17,7 +17,7 @@ public class TigerMain {
         TigerLLKParser parser = new TigerLLKParser(tokens);
         ParseTree tree = parser.tigerprogram(); // start parse walk at non-terminal tigerprogram
 	// tigerprogram() calls the production rule specified in the grammar
-	TigerLLKBaseVisitor<Value> tiger = new TigerLLKBaseVisitor<Value>();
+	TigerLLKExtendedVisitor tiger = new TigerLLKExtendedVisitor();
 	tiger.visit(tree);
 	System.out.println(tree.toStringTree(parser));
     }

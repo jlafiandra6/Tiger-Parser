@@ -6,10 +6,10 @@ public class Value {
 	// if name != null but type is empty or null this object is a function header
 	// if name != null and type > 1 this object is a record
 	private String name;
-	private ArrayList<Object> type;
+	private String type;
 	private Object content;
-	private Object returnType;
-	private ArrayList<Object> paramType;
+	private String returnType;
+	private Object paramType;
 
 
 	//Constant
@@ -18,23 +18,52 @@ public class Value {
 	}
 
 	//Record
-	public Value(String name, ArrayList<Object> type) {
+	public Value(String name, String type) {
 		this.name = name;
 		this.type = type;
 	}
 
-	//Function
-	public Value(String name, Object returnType, ArrayList<Object> paramType) {
-		this.name = name;
-		this.returnType = returnType;
-		this.paramType = paramType;
-	}
 
 	//Regular single value
-	public Value(String name, Object type, Object content) {
+	public Value(String name, String type, Object content) {
 		this.name = name;
-		this.type.add(0, type);
+		this.type = type;
 		this.content = content;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public Object getContent() {
+		return this.content;
+	}
+	public void setContent(Object content) {
+		 this.content = content;
+	}
+
+	public String getType() {
+		return this.type;
+	}
+	public String getRetType() {
+		return this.returnType;
+	}
+	public void setType(String type) {
+	 	this.type = type;
+	}
+
+	public Object getParams() {
+		return this.paramType;
+	}
+	public void setParams(Object params) {
+		this.paramType = params;
+	}
+	public void setReturn(String returnType) {
+		this.returnType = returnType;
 	}
 
 

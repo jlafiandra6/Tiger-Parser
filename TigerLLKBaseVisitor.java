@@ -24,7 +24,6 @@ public class TigerLLKBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitTigerprogram(TigerLLKParser.TigerprogramContext ctx) {
-		System.out.println("Visitor works");
 		return visitChildren(ctx);
 	}
 	/**
@@ -68,7 +67,10 @@ public class TigerLLKBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIDtype(TigerLLKParser.IDtypeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIDtype(TigerLLKParser.IDtypeContext ctx) {
+
+		return visitChildren(ctx);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -103,21 +105,29 @@ public class TigerLLKBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTypeid(TigerLLKParser.TypeidContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTypeid(TigerLLKParser.TypeidContext ctx) {
+
+		return visitChildren(ctx);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVardeclaration(TigerLLKParser.VardeclarationContext ctx) { return visitChildren(ctx); }
+	@Override public T visitVardeclaration(TigerLLKParser.VardeclarationContext ctx) {
+		System.out.println(ctx.type().getClass());
+		return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIdlist(TigerLLKParser.IdlistContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIdlist(TigerLLKParser.IdlistContext ctx) {
+
+		return visitChildren(ctx);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -229,7 +239,9 @@ public class TigerLLKBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitWhileBlock(TigerLLKParser.WhileBlockContext ctx) { return visitChildren(ctx); }
+	@Override public T visitWhileBlock(TigerLLKParser.WhileBlockContext ctx) {
+		System.out.println("yup this works");
+		return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -390,7 +402,9 @@ public class TigerLLKBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIntLiteral(TigerLLKParser.IntLiteralContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIntLiteral(TigerLLKParser.IntLiteralContext ctx) {
+
+		return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

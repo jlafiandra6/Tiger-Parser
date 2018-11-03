@@ -13,6 +13,10 @@ public class TigerSymbolTable {
 
 	}
 
+	public Map<String, Object> getTable() {
+		return table;
+	}
+
 	public Object assign(String name, Object value) {
 		return table.put(name, value);
 	}
@@ -35,14 +39,14 @@ public class TigerSymbolTable {
 		return table.containsKey(varName);
 	}
 
-	public boolean isDefined(String varName) {
+	public Object getValue(String varName) {
 		if (table.containsKey(varName)) {
-			return true;
+			return table.get(varName);
 		}
 		if (this.hasParent()) {
-			return getParent().isDefined(varName);
+			return getParent().getValue(varName);
 		}
-		return false;
+		return null;
 	}
 
 	public Object removeLocally(String varName) {
